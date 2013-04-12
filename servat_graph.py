@@ -47,14 +47,16 @@ def make_graph():
     for (from_title, from_url, to_title, to_url) in get_connections():
         print from_url
         if not G.has_node(from_url):
-            G.add_node(from_url, label=from_title)
+            cit, label = from_title.split('-', 1)
+            G.add_node(from_url, label=label, citation=cit)
         if not G.has_node(to_url):
-            G.add_node(to_url, label=to_title)
+            cit, label = to_title.split('-', 1)
+            G.add_node(to_url, label=label, citation=cit)
         if not G.has_edge(from_url, to_url):
             G.add_edge(from_url, to_url)
         #print G.size()
         #break
-    nx.write_gexf(G, 'servat_bverfge_only.gexf')
+    nx.write_gexf(G, 'servat_bverfge_only_notag.gexf')
 
 make_graph()
 

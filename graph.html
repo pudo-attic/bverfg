@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Der Bundesverfassungsgraph</title>
+  <!--link rel="stylesheet" href=""-->
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style>
+    #graph {
+      width: 900px;
+      height: 700px;
+    }
+  </style>
+</head>
+<body>
+  <div id="graph"></div>
+
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://cloud.github.com/downloads/misoproject/dataset/miso.ds.deps.min.0.4.0.js"></script>
+  <script src="http://sigmajs.org/js/sigma.min.js"></script>
+  <script src="http://sigmajs.org/js/sigma.parseGexf.js"></script>
+  <script src="http://sigmajs.org/js/sigma.forceatlas2.js"></script>
+  
+
+  <script>
+    $(function() {
+        var sigInst = sigma.init(document.getElementById('graph')).drawingProperties({
+          defaultLabelColor: '#fff',
+          defaultLabelSize: 14,
+          defaultLabelBGColor: '#fff',
+          defaultLabelHoverColor: '#000',
+          labelThreshold: 6,
+          defaultEdgeType: 'curve'
+        }).graphProperties({
+          minNodeSize: 0.5,
+          maxNodeSize: 5,
+          minEdgeSize: 1,
+          maxEdgeSize: 1
+        }).mouseProperties({
+          maxRatio: 32
+        });
+      sigInst.parseGexf('servat_bverfge_only.gexf');
+      sigInst.draw();
+      sigInst.startForceAtlas2();
+    });
+  </script>
+</body>
+</html>

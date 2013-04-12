@@ -28,11 +28,15 @@ def get_connections():
         for b in doc.findall('//table//table//b'):
             if 'Zitiert durch' in b.text:
                 for link in b.getnext().getnext().findall('a'):
+                    if not 'BVerfGE' in link.text:
+                        continue
                     title = link.text + link.tail
                     yield (title, link.get('href'), verdict_title, verdict)
 
             if 'Zitiert selbst' in b.text:
                 for link in b.getnext().getnext().findall('a'):
+                    if not 'BVerfGE' in link.text:
+                        continue
                     title = link.text + link.tail
                     yield (verdict_title, verdict, title, link.get('href'))
 
@@ -50,7 +54,7 @@ def make_graph():
             G.add_edge(from_url, to_url)
         #print G.size()
         #break
-    nx.write_gexf(G, 'servat.gexf')
+    nx.write_gexf(G, 'servat_bverfge_only.gexf')
 
 make_graph()
 
